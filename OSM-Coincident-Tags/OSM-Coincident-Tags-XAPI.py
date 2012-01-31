@@ -83,7 +83,7 @@ if __name__ == '__main__':
         sys.exit(1)
 
     if args.query:
-        url = 'http://jxapi.openstreetmap.org/xapi/api/0.6/*%s' % args.query
+        url = 'http://open.mapquestapi.com/xapi/api/0.6/*%s' % args.query
         t = etree.parse(url)
         html_title = args.query
     elif args.filename:
