@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html version="HTML+RDFa 1.1" lang="en">
+	<head>
+		<title>Coincident tags for {{ tagName }}</title>
+		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0"/>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <script src="http://code.jquery.com/jquery.min.js"></script>
+    <script src="jquery.charts.js"></script>
+
+		<script type="application/javascript">
+			var data = {{ json }}
+		</script>
+
+		<script type="application/javascript">
+			function repeatArray(arr, n)
+			{
+				var res = []; for (var i=0; i<n; ++i) Array.prototype.push.apply(res, arr); return res
+			}
+
+			$(document).ready(function () {
+				$('section table').each(function() {
+					$(this).charts({
+						'chartbgcolours': ['#a40000', '#204a87', '#5c3566', '#4e9a06', '#8f5902', '#ce5c00'],
+						'chartfgcolours': repeatArray(['#fff'], 6)
+					});
+				});
+			});
+		</script>
+		<style>
+			/* CSS reset */
+			* { margin: 0 }
+
+			body
+			{
+				margin: auto;
+				max-width: 40em;
+				letter-spacing: -1px;
+				line-height: 1em;
+			}
+
+			header
+			{
+				text-align: center;
+			}
+
+			header h1
+			{
+				padding: 1em;
+				text-shadow: 0 0 2px #666677;
+				font-size: 2em;
+				font-weight: 400;
+			}
+
+			header b
+			{
+				font-weight: 600;
+			}
+
+			section
+			{
+				padding: 1em;
+			}
+
+			section h1
+			{
+				margin: -1em;
+				margin-bottom: 1ex;
+				padding: 0.5ex 1ex;
+				text-shadow: 0 0 1px #666677;
+				border-top: 1px solid #ccc;
+				background: -moz-linear-gradient(top, white, #eee 2px, white 2em);
+				background: -ms-linear-gradient(top, white, #eee 2px, white 2em);
+				background: -o-linear-gradient(top, white, #eee 2px, white 2em);
+				background: -webkit-linear-gradient(top, white, #eee 2px, white 2em);
+				background: linear-gradient(top, white, #eee 2px, white 2em);
+			}
+
+			table
+			{
+				box-shadow: 0 1px 5px rgba(0, 0, 0, 0.7);
+				border-collapse:collapse;
+			}
+
+			td, th
+			{
+				padding: 0.5ex 1ex;
+			}
+
+			th
+			{
+				background-color: #222;
+				color: white;
+				text-align: left;
+			}
+
+			tr:nth-child(2n+1) {
+				background-color: #f1f1f1;
+			}
+
+			/* for jQuery Charts */
+			.chartscontainer ul
+			{
+				padding: 0;
+				margin: 0;
+			}
+
+			.chartscontainer li
+			{
+				list-style-type: none;
+			}
+
+			.chartsbar {
+				box-shadow: 1px 1px 2px #555, inset 1px 1px 3px #111;
+			}
+		</style>
+	</head>
+	<body>
+	<header>
+		<h1>Coincident tags for <b> {{ tagName }}</b></h1>
+	</header>
+	{% for keyName, tagCounts in tags.iteritems() %}
+	<section id="section-{{ keyName }}">
+	<h1>{{ keyName }}</h1>
+		<table>
+			<thead>
+				<tr><th>Value</th><th>Count</th></tr>
+			</thead>
+			<tbody>
+				{%- for value, count in tagCounts|dictsort(true, 'value')|reverse %}
+				<tr><td>{{ value }}</td><td>{{ count }}</td></tr>
+				{%- endfor %}
+			</tbody>
+		</table>
+	</section>
+	{% endfor %}
+</body>
+</html>
+
