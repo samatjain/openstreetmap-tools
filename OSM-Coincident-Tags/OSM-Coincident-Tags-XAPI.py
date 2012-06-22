@@ -91,6 +91,7 @@ if __name__ == '__main__':
         html_title = args.filename
 
     r = processOSMFile(t)
+    # Sort by value (number of times a tag has appeared
     r = OrderedDict(sorted(r.iteritems(), key=operator.itemgetter(1), reverse=True))
     grouped = group_by_key(r)
 
