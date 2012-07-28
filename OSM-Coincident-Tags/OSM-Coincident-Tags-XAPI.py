@@ -4,7 +4,6 @@ from __future__ import print_function
 from __future__ import unicode_literals
 
 import argparse
-import json
 import pprint
 import operator
 import sys
@@ -14,6 +13,11 @@ from collections import OrderedDict
 import jinja2
 
 from lxml import etree
+
+try:
+    import simplejson as json
+except ImportError:
+    import json
 
 
 def processOSMFile(t):
