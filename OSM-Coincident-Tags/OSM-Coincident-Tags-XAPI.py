@@ -7,6 +7,7 @@ import argparse
 import pprint
 import operator
 import sys
+import urllib
 
 from collections import OrderedDict
 
@@ -80,6 +81,8 @@ if __name__ == '__main__':
     group.add_argument('--filename', '-i', help='Saved XAPI query')
     group.add_argument('--query', '-q', help='XAPI query predicates, e.g. "[name=Starbucks]"')
 
+    arg_parser.add_argument('--endpoint', '-e', default='http://open.mapquestapi.com/xapi/api/0.6/', help='OpenStreetMap XML-returning API endpoint (default: %(default)s)')
+
     args = arg_parser.parse_args()
 
     if len(sys.argv) < 2:
@@ -87,7 +90,8 @@ if __name__ == '__main__':
         sys.exit(1)
 
     if args.query:
-        url = 'http://open.mapquestapi.com/xapi/api/0.6/*%s' % args.query
+        url = args.endpoint + urllib.quote_plus(args.query)
+        print(url)
         t = etree.parse(url)
         html_title = args.query
     elif args.filename:
