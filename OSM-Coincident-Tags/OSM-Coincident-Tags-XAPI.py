@@ -12,6 +12,7 @@ import urllib
 from collections import OrderedDict
 
 import jinja2
+import six
 
 from lxml import etree
 
@@ -40,7 +41,7 @@ def processOSMFile(t):
                         'phone',
                         'source' }
     pruned_counts = {}
-    for (k, v) in counts.iteritems():
+    for (k, v) in six.iteritems(counts):
         # Ignore low counts
         if v < 2:
             continue
@@ -56,7 +57,7 @@ def processOSMFile(t):
 
 def group_by_key(d):
     grouped = OrderedDict() 
-    for (k, v) in d.iteritems():
+    for (k, v) in six.iteritems(d):
         l = grouped.get(k[0], {})
         l[k[1]] = v
         grouped[k[0]] = l
@@ -64,7 +65,7 @@ def group_by_key(d):
 
 
 def output_html(title, grouped):
-    jt = jinja2.Template(file('template.html').read())
+    jt = jinja2.Template(open('template.html').read())
 
     # Compact JSON
     jsonData = json.dumps(grouped, separators=(',', ':'))
@@ -100,7 +101,8 @@ if __name__ == '__main__':
 
     r = processOSMFile(t)
     # Sort by value (number of times a tag has appeared
-    r = OrderedDict(sorted(r.iteritems(), key=operator.itemgetter(1), reverse=True))
+    r = OrderedDict(sorted(r.items(), key=operator.itemgetter(1), reverse=True))
+    r.iteritems = r.items
     grouped = group_by_key(r)
 
 
