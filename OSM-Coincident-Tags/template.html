@@ -119,7 +119,7 @@
 	<header>
 		<h1>Coincident tags for <b> {{ tagName }}</b></h1>
 	</header>
-	{% for keyName, tagCounts in tags.iteritems() %}
+	{% for keyName, tagCounts in tags.items() %}
 	<section id="section-{{ keyName }}">
 	<h1>{{ keyName }}</h1>
 		<table>

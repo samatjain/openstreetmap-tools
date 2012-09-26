@@ -109,4 +109,6 @@ if __name__ == '__main__':
     if args.mode == 'json':
         print(json.dumps(grouped, indent=4))
     elif args.mode == 'html':
-        print(output_html(html_title, grouped).encode('utf8'))
+        # Python 2 Unicode stupidity
+        #print(output_html(html_title, grouped).encode('utf8'))
+        print(output_html(html_title, grouped))
