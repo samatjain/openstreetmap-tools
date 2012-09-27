@@ -102,7 +102,6 @@ if __name__ == '__main__':
     r = processOSMFile(t)
     # Sort by value (number of times a tag has appeared
     r = OrderedDict(sorted(r.items(), key=operator.itemgetter(1), reverse=True))
-    r.iteritems = r.items
     grouped = group_by_key(r)
 
 
